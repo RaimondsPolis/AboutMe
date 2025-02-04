@@ -84,14 +84,14 @@
             }
 
             const shapes = [];
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 500; i++) {
                 shapes.push(new Shape(
                     Math.random() * canvas.width,
                     Math.random() * canvas.height,
                     Math.random() * 30 + 10,
                     Math.random() * 3 + 1,
-                    `hsl(${Math.random() * 360}, 100%, 50%)`
-                ));
+                    `hsla(${Math.random() * 360}, 100%, 0%, 0.3)` 
+                ));//                       maina krāsu ^^  ^^^ maina transparency              
             }
 
             function animate() {

@@ -51,41 +51,38 @@ window.onload = function() {
     canvas.height = window.innerHeight;
 
     class Shape {
-        constructor(x, y, radius, speed, color) {
+        constructor(x, y, size, speed, color) {
             this.x = x;
             this.y = y;
-            this.radius = radius;
+            this.size = size*1.57; // size instead of radius
             this.speed = speed;
             this.color = color;
         }
 
         draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
             ctx.fillStyle = this.color;
-            ctx.fill();
-            ctx.closePath();
+            ctx.fillRect(this.x, this.y, this.size, this.size); // Draw square
         }
 
         update() {
             this.x += this.speed;
-            if (this.x - this.radius > canvas.width) {
-                this.x = -this.radius;
+            if (this.x - this.size > canvas.width) {
+                this.x = -this.size;
             }
             this.draw();
         }
     }
 
     const shapes = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 500; i++) {
         shapes.push(new Shape(
-            Math.random() * canvas.width,
-            Math.random() * canvas.height,
-            Math.random() * 30 + 10,
-            Math.random() * 3 + 1,
-            `hsl(${Math.random() * 360}, 100%, 50%)`
-        ));
-    }
+                Math.random() * canvas.width,
+                Math.random() * canvas.height,
+                Math.random() * 30 + 10,
+                Math.random() * 3 + 1,
+                `hsla(${Math.random() * 360}, 100%, 0%, 0.3)` 
+            ));//                       maina krāsu ^^  ^^^ maina transparency              
+        }
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
