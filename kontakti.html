@@ -51,44 +51,38 @@ window.onload = function() {
     canvas.height = window.innerHeight;
 
     class Shape {
-    constructor(x, y, size, speed, color) {
-        this.x = x;
-        this.y = y;
-        this.size = size; // size controls triangle dimensions
-        this.speed = speed;
-        this.color = color;
-    }
-
-    draw() {
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y - this.size); // Top vertex
-        ctx.lineTo(this.x - this.size, this.y + this.size); // Bottom left vertex
-        ctx.lineTo(this.x + this.size, this.y + this.size); // Bottom right vertex
-        ctx.closePath();
-
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }
-
-    update() {
-        this.x += this.speed;
-        if (this.x - this.size > canvas.width) {
-            this.x = -this.size;
+        constructor(x, y, size, speed, color) {
+            this.x = x;
+            this.y = y;
+            this.size = size*1.57; // size instead of radius
+            this.speed = speed;
+            this.color = color;
         }
-        this.draw();
+
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.size, this.size); // Draw square
+        }
+
+        update() {
+            this.x += this.speed;
+            if (this.x - this.size > canvas.width) {
+                this.x = -this.size;
+            }
+            this.draw();
+        }
     }
-}
 
     const shapes = [];
     for (let i = 0; i < 500; i++) {
-                shapes.push(new Shape(
-                    Math.random() * canvas.width,
-                    Math.random() * canvas.height,
-                    Math.random() * 30 + 10,
-                    Math.random() * 3 + 1,
-                    `hsla(${Math.random() * 360}, 100%, 0%, 0.3)` 
-                ));//                       maina krāsu ^^  ^^^ maina transparency              
-            }
+        shapes.push(new Shape(
+                Math.random() * canvas.width,
+                Math.random() * canvas.height,
+                Math.random() * 30 + 10,
+                Math.random() * 3 + 1,
+                `hsla(${Math.random() * 360}, 100%, 0%, 0.3)` 
+            ));//                       maina krāsu ^^  ^^^ maina transparency              
+        }
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -118,9 +112,9 @@ window.onload = function() {
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/projekti">Projects</a></li>
-                <li class="nav-item"><a class="nav-link" href="/kontakti">Contacts</a></li>
+                <li class="nav-item"><a class="nav-link" href="./index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="./projekti.html">Projects</a></li>
+                <li class="nav-item"><a class="nav-link" href="./kontakti.html">Contacts</a></li>
             </ul>
         </div>
     </div>
@@ -128,25 +122,13 @@ window.onload = function() {
 
 
 
-<div class="container text-center mt-5">
-    <h1 class="display-3">PROJEKTI</h1>
-    <div class="cv-content">
-        <h2>My Projects</h2>
-        <p>Click on a project to view it on GitHub.</p>
-
-        <div class="d-grid gap-3">
-            <a href="https://reinisdelvers.github.io/bullet_hell/" target="_blank" class="btn btn-dark btn-lg">Bullet Hell</a>
-            <p>autori: Raimonds Polis, Aleksis Kaļetovs, Reinis Delvers, Rūdolfs Čurkste</p>
-            <a href="https://reinisdelvers.github.io/ifififififififififif/" target="_blank" class="btn btn-dark btn-lg">Choose Your Own Adventure</a>
-            <p>autori: Raimonds Polis, Aleksis Kaļetovs, Reinis Delvers</p>
-            <a href="https://reinisdelvers.github.io/Periodiska-tabula/" target="_blank" class="btn btn-dark btn-lg">Periodic table</a>
-            <p>autori: Raimonds Polis, Aleksis Kaļetovs, Reinis Delvers</p>
-            <a href="https://raimondspolis.github.io/raimis/index.html" target="_blank" class="btn btn-dark btn-lg">My First ever attempt at a website</a>
-            <p> autors: Es(Raimonds Polis)</p>
-
+    <div class="container text-center mt-5">
+        <h1 class="display-3">Kontakti</h1>
+        <div class="cv-content">
+            <h2><strong>E-pasts: </strong> raimonds.polis.rp@gmail.com</h2>
+            <h2><strong>Telefons: </strong>+371 27737951</h2>
         </div>
     </div>
-</div>
 
     <canvas id="myCanvas"></canvas>
 
