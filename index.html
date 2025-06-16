@@ -60,41 +60,68 @@
     canvas.height = window.innerHeight;
 
     class Shape {
-        constructor(x, y, radius, speed, color) {
-            this.x = x;
-            this.y = y;
-            this.radius = radius;
-            this.speed = speed;
-            this.color = color;
-        }
+    constructor(x, y, radius, speed, color, isSmiley) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.speed = speed;
+        this.color = color;
+        this.isSmiley = isSmiley;
+    }
 
-        draw() {
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+
+        if (this.isSmiley) {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.scale(this.radius / 50, this.radius / 50); // normalize scale
+
+            // Eyes
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = this.color;
+            ctx.arc(-15, -15, 5, 0, Math.PI * 2);
+            ctx.arc(15, -15, 5, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
             ctx.fill();
             ctx.closePath();
-        }
 
-        update() {
-            this.x += this.speed;
-            if (this.x - this.radius > canvas.width) {
-                this.x = -this.radius;
-            }
-            this.draw();
+            // Mouth
+            ctx.beginPath();
+            ctx.arc(0, 5, 20, 0, Math.PI);
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.restore();
         }
     }
+
+    update() {
+        this.x += this.speed;
+        if (this.x - this.radius > canvas.width) {
+            this.x = -this.radius;
+        }
+        this.draw();
+    }
+}
 
     const shapes = [];
-    for (let i = 0; i < 500; i++) {
-        shapes.push(new Shape(
-            Math.random() * canvas.width,
-            Math.random() * canvas.height,
-            Math.random() * 30 + 10,
-            Math.random() * 3 + 1,
-            `hsla(${Math.random() * 360}, 100%, 0%, 0.3)` 
-        ));
-    }
+for (let i = 0; i < 500; i++) {
+    const isSmiley = Math.random() < 0.01; // ~1% chance for a smiley
+    shapes.push(new Shape(
+        Math.random() * canvas.width,
+        Math.random() * canvas.height,
+        Math.random() * 30 + 10,
+        Math.random() * 3 + 1,
+        `hsla(${Math.random() * 360}, 100%, 0%, 0.3)`,
+        isSmiley
+    ));
+}
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
